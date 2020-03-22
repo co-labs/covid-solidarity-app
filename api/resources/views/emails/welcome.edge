@@ -1,4 +1,15 @@
-<h2> Hello {{ username }} </h2>
-<p>
-    Welcome to the Solidarity-Covid
-</p>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+</head>
+
+<body style="font-family: 'Montserrat', sans-serif">
+    <div style="margin: 5%">
+        <img style="margin-bottom: 3%;" src="{{ assetsUrl('https://covid-solidarity.org/assets/img/logo.svg') }}" />
+        
+        <h2> Hello {{ first_name }} </h2>
+        <p>Welcome to the covid-solidarity.</p>
+        <p>Thank you for joigning us. Let's spread the solidarity, not the virus!</p>
+        <hr>
+        <p style="font-size: 0.8em;">❤️ Made with love to beat Covid-19   -   <span><a href="mailto:info@covid-solidarity.org" style="color:#44b144">Contact us</a></span></p>
+    </div>
+</body>
