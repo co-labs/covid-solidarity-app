@@ -36,9 +36,9 @@ class UserController {
         .subject('Welcome to Covid Solidarity !')
     });
 
-    await auth.login(user).remember(true);
+    await auth.remember(true).login(user);
 
-    response.send(item);
+    response.send(user);
   }
 
   async login({auth, response, request}) {
