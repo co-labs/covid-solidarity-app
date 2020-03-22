@@ -17,7 +17,7 @@
 const Route = use('Route');
 const Marker = use('App/Models/Marker');
 const User = use('App/Models/User');
-const Order = use('App/Models/Order');
+const Match = use('App/Models/Match');
 const Mail = use('Mail');
 const Database = use('Database');
 
