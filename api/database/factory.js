@@ -37,7 +37,7 @@ Factory.blueprint('App/Models/User', async (faker) => {
   }
 });
 
-Factory.blueprint('App/Models/Order', (faker) => {
+Factory.blueprint('App/Models/Match', (faker) => {
   return {
     phone: faker.phone(),
     name: faker.name(),
@@ -60,7 +60,7 @@ Factory.blueprint('App/Models/Marker', (faker) => {
     name: faker.name(),
     message: faker.sentence(),
     address: faker.address(),
-    type: faker.pickone(['quarantine', 'help']),
+    type: faker.pickone(['helper', 'helped']),
     status: faker.pickone(['complete', 'active']),
     creator_id: null,
     helper_id: null,

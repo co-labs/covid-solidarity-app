@@ -78,6 +78,16 @@ Route.get('/api/v1/users', async ({response}) => {
   response.send(items.toJSON())
 });
 
+Route.get('/api/v1/proposals', async ({response}) => {
+  const items = await Order.query().where('type', 'helper').fetch();
+  response.send(items.toJSON())
+});
+
+Route.get('/api/v1/requests', async ({response}) => {
+  const items = await Order.query().where('type', 'helped').fetch();
+  response.send(items.toJSON())
+});
+
 Route.get('/api/v1/orders', async ({response}) => {
   const items = await Order.query().fetch();
   response.send(items.toJSON())

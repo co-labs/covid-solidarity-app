@@ -21,13 +21,13 @@ class MarkerSeeder {
       .model('App/Models/User')
       .createMany(10);
 
-    const orders = await Factory
-      .model('App/Models/Order')
-      .createMany(10);
-
     const marker = await Factory
       .model('App/Models/Marker')
       .createMany(100);
+
+    const orders = await Factory
+      .model('App/Models/Order')
+      .createMany(10);
   }
 }
 

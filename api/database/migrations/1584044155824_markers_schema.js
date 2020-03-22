@@ -7,9 +7,9 @@ class MarkersSchema extends Schema {
   up () {
     this.create('markers', (table) => {
       table.increments();
+      table.string('name', 60).nullable();
       table.string('phone', 60).nullable();
       table.string('email', 60).nullable();
-      table.string('name', 60).nullable();
       table.text('message').nullable();
       table.string('address', 60).nullable();
       table.string('type', 60).nullable();
