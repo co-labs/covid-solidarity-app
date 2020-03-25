@@ -16,6 +16,7 @@ class Form extends React.Component {
     const data = new FormData(event.target);
     axios({
       method: this.props.method || 'POST',
+      url: this.props.action,
       data: data,
     })
       .then(res => {
