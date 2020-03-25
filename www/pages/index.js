@@ -7,7 +7,7 @@ import { Form } from '../components';
 import axios from 'axios';
 import GeolocInput from "../components/GeolocInput";
 import Header from "../components/Header";
-import { Cluster } from '../components';
+import Cluster from '../components/Cluster';
 
 /**
  * Default class styles for this component
@@ -65,7 +65,7 @@ const QMarker = (props) => {
       aria-haspopup="true"
         onClick={() => props.onClick(item)}
     >
-      {props.item.type === 'quarantine' ? <AccessibilityNew></AccessibilityNew> : <Favorite></Favorite>}
+      {props.item.type === 'helper' ? <AccessibilityNew></AccessibilityNew> : <Favorite></Favorite>}
     </IconButton>
     </Marker >
   )
@@ -176,8 +176,7 @@ export default function Index() {
       onViewportChange={setViewport}
       mapboxApiAccessToken={process.env.MAPBOX_TOKEN}
     >
-      {/*markers.map((item) => <QMarker key={item.id} lat={item.point.coordinates[1]} lng={item.point.coordinates[0]} item={item} onClick={(item) => onClickMarker(item)} />)*/}
-      {/*renderPopup()*/}
+      {markers.map((item) => <QMarker key={item.id} lat={item.point.coordinates[1]} lng={item.point.coordinates[0]} item={item} onClick={(item) => onClickMarker(item)} />)}
       <Cluster data={markers} type='quarantine'/>
       <Cluster data={markers} type='help'/>
     </ReactMapGL>

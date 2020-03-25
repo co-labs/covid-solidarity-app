@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Header from "../components/Header";
-import getApiUrl from "../src/helpers/getApiUrl";
+import getApiUrl from "../utils/helpers/getApiUrl";
 import React, {useEffect} from "react";
 import ProposalCard from "../components/ProposalCard";
 

@@ -13,7 +13,7 @@ class GeolocInput extends React.Component {
 
   handleSelect(res) {
     //console.log('Localization', res);
-    this.inputAddress.value = res.description+'';
+    this.inputAddress.value = res.description + '';
     geocodeByPlaceId(res.place_id)
       .then((results) => {
         console.log(results[0].geometry.location.lat);
@@ -26,11 +26,10 @@ class GeolocInput extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <GooglePlacesAutocomplete className={this.props.className}
-                                  onSelect={this.handleSelect}/>
-        <input type="hidden" name={'lat'} ref={(ref) => this.inputLat = ref} />
-        <input type="hidden" name={'lng'} ref={(ref) => this.inputLng = ref} />
-        <input type="hidden" name={'address'} ref={(ref) => this.inputAddress = ref} />
+        <GooglePlacesAutocomplete className={this.props.className + ' geolocInput'} onSelect={this.handleSelect}/>
+        <input type="hidden" name={'lat'} ref={(ref) => this.inputLat = ref}/>
+        <input type="hidden" name={'lng'} ref={(ref) => this.inputLng = ref}/>
+        <input type="hidden" name={'address'} ref={(ref) => this.inputAddress = ref}/>
       </React.Fragment>
     )
   }

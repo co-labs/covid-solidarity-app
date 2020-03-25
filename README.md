@@ -74,18 +74,7 @@ User of the platform (could be an helper or an helped)
 - status
 - created_at
 - updated_at
-- main_address_id
-
-# Address
-- id
 - address
-- street
-- number
-- postcode
-- neighbourhood
-- region
-- city
-- country
 - lat
 - lng
 
@@ -102,7 +91,6 @@ User of the platform (could be an helper or an helped)
 - address
 - lat
 - lng
-- address_id
 - transaction_id
 - transaction_type
 - transaction_status
@@ -110,7 +98,7 @@ User of the platform (could be an helper or an helped)
 - created_at
 - updated_at
 - meta
--- notes
+--  notes
 - updated_at
 - created_at
 
@@ -118,8 +106,8 @@ User of the platform (could be an helper or an helped)
 
 - id
 - message
-- helped_id
-- helper_id
+- sender_id
+- recipient_id
 - status (inprogress|blocked|accepted)
 - updated_at
 - created_at
@@ -218,8 +206,8 @@ Get the list of available request
 - [x] Geoloc the addresss
 - [ ] Integrate front end page and design
 - [ ] Continue the Form for asking help and for help (W.I.P)
-- [ ] Clustering markers
 - [ ] Localization (en|fr|nl)
+- [ ] Clustering markers
 - [ ] Add a popover for each markers (need to be discussed)
 - [ ] Cleaning stuff inside separate components
 

@@ -26,7 +26,7 @@ class MarkerSeeder {
       .createMany(100);
 
     const orders = await Factory
-      .model('App/Models/Order')
+      .model('App/Models/Match')
       .createMany(10);
   }
 }

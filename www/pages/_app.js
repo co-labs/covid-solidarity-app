@@ -3,7 +3,7 @@ import App from 'next/app';
 import Head from '../components/Head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from '../src/theme';
+import theme from '../utils/theme';
 import 'react-google-places-autocomplete/dist/assets/index.css';
 
 export default class MyApp extends App {

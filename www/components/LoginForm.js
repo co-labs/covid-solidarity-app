@@ -13,6 +13,11 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from "./Copyright";
+import Form from "./Form";
+import getApiUrl from "../utils/helpers/getApiUrl";
+import Router from 'next/router';
+import {login} from "../utils/auth";
+import cookie from "js-cookie";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -34,6 +39,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const handleSuccess = (res) => {
+  console.log('Res 2', res);
+  cookie.set('token', 1, { expires: 1 });
+  Router.push('/dashboard');
+};
+
 export default function SignIn() {
   const classes = useStyles();
 
@@ -47,7 +58,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <Form className={classes.form} action={getApiUrl('login')} onSuccess={handleSuccess}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -95,7 +106,7 @@ export default function SignIn() {
               </Link>
             </Grid>
           </Grid>
-        </form>
+        </Form>
       </div>
       <Box mt={8}>
         <Copyright />

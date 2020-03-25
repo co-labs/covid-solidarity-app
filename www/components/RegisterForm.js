@@ -14,6 +14,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from "./Copyright";
 import axios from 'axios';
+import getApiUrl from "../utils/helpers/getApiUrl";
+import Router from 'next/router';
+import Form from "./Form";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -50,10 +53,12 @@ const handleSubmit = event => {
   event.preventDefault(event)
   axios({
     method: 'POST',
-    url: 'http://localhost:3333/api/v1/register',
+    url: getApiUrl('register'),
     data: {...userFormInput}
   })
-  .then(response => console.log(response))
+  .then(response => {
+    Router.push('dashboard');
+  })
   .catch(error => console.log(error.response))
 };
 
@@ -70,16 +75,16 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <Form className={classes.form} action={getApiUrl('register')}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
+                autoComplete="first_name"
+                name="first_name"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
+                id="first_name"
                 label="First Name"
                 autoFocus
                 onChange={onChange}
@@ -90,10 +95,10 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
+                id="last_name"
                 label="Last Name"
-                name="lastName"
-                autoComplete="lname"
+                name="last_name"
+                autoComplete="last_name"
                 onChange={onChange}
               />
             </Grid>
@@ -122,12 +127,6 @@ export default function SignUp() {
                 onChange={onChange}
               />
             </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid>
           </Grid>
           <Button
             type="submit"
@@ -140,12 +139,12 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
           </Grid>
-        </form>
+        </Form>
       </div>
       <Box mt={5}>
         <Copyright />

@@ -2,51 +2,65 @@
 
 const User = use('App/Models/User');
 const Mail = use('Mail');
-const auth = use('Mail');
+const {validate} = use('Validator');
 
 class UserController {
-  /**
-   * User registration process
-   *
-   * @param auth
-   * @param response
-   * @param request
-   * @returns {Promise<void>}
-   */
-  async store({auth, response, request}) {
-
-    let user = await new User;
-    user.first_name = request.input('firstName');
-    user.last_name = request.input('lastName');
-    user.username = user.first_name + user.last_name;
-    user.email = request.input('email');
-    user.password = request.input('password');
-    user.save();
-
     /**
-     * Send an email only when people is a new one
+     * User registration process
+     *
+     * @param auth
+     * @param response
+     * @param request
+     * @returns {Promise<void>}
      */
-    await Mail.send('emails.welcome', user.toJSON(), (message) => {
+    async store({auth, response, request}) {
 
-      console.log('Email', user.email);
+        const rules = {
+            email: 'required|email|unique:users,email',
+            password: 'required'
+        }
 
-      message
-        .to(user.email)
-        .from('info@allforclimate.earth')
-        .subject('Welcome to Covid Solidarity !')
-    });
+        const validation = await validate(request.all(), rules)
 
-    await auth.remember(true).login(user);
+        if (validation.fails()) {
+            return response.send(validation.messages(), 402);
+        }
 
-    response.send(user);
-  }
+        let user = await new User;
+        user.first_name = request.input('firstName');
+        user.last_name = request.input('lastName');
+        user.username = user.first_name + user.last_name;
+        user.email = request.input('email');
+        user.password = request.input('password');
 
-  async login({auth, response, request}) {
+        await user.save();
 
-    let user = await auth.attempt(request.input('email'), request.input('password')).remember();
+        if (user) {
+            /**
+             * Send an email only when people is a new one
+             */
+            await Mail.send('emails.welcome', user.toJSON(), (message) => {
 
-    response.send(user);
-  }
+                console.log('Email', user.email);
+
+                message
+                    .to(user.email)
+                    .from('info@allforclimate.earth')
+                    .subject('Welcome to Covid Solidarity !')
+            });
+
+            await auth.remember(true).login(user.id);
+        }
+
+        response.send(user);
+    }
+
+    async login({auth, response, request}) {
+
+        let user = await auth.attempt(request.input('email'), request.input('password'));
+
+        response.send(user);
+    }
 }
 
 module.exports = UserController;

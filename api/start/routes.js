@@ -21,8 +21,10 @@ const Match = use('App/Models/Match');
 const Mail = use('Mail');
 const Database = use('Database');
 
-Route.on('/').render('welcome');
-Route.on('/dan').render('welcome.dan');
+Route.get('/fr', ({ antl, view }) => {
+  antl.switchLocale('fr');
+  return view.render('welcome');
+});
 
 Route.get('/en', ({ antl, view }) => {
   antl.switchLocale('en');
@@ -58,7 +60,7 @@ Route.get('/api/v1/match', async ({request, response}) => {
 });
 
 Route.get('/api/v1/search', async ({request, response}) => {
-  const items = await Database.raw('SELECT *, (acos(sin(?) * sin(lat) + cos(?) * cos(lat) * cos(lng - (?))) * 6371) as distance from orders WHERE lat IS NOT NULL ORDER BY distance ASC ', [request.input('lat'), request.input('lat'), request.input('lng')]);
+  const items = await Database.raw('SELECT *, (acos(sin(?) * sin(lat) + cos(?) * cos(lat) * cos(lng - (?))) * 6371) as distance from markers WHERE lat IS NOT NULL ORDER BY distance ASC ', [request.input('lat'), request.input('lat'), request.input('lng')]);
   response.send(items[0]);
 });
 
@@ -66,7 +68,7 @@ Route.post('/api/v1/markers', 'MarkerController.store');
 
 Route.post('/api/v1/register', 'UserController.store');
 
-Route.get('/api/v1/login', 'UserController.login');
+Route.post('/api/v1/login', 'UserController.login');
 
 Route.get('/api/v1/me', async ({auth, response}) => {
   const user = await auth;
@@ -74,22 +76,22 @@ Route.get('/api/v1/me', async ({auth, response}) => {
 });
 
 Route.get('/api/v1/users', async ({response}) => {
-  const items = await User.query().with('orders').with('requests').fetch();
+  const items = await User.query().with('markers').with('requests').fetch();
   response.send(items.toJSON())
 });
 
 Route.get('/api/v1/proposals', async ({response}) => {
-  const items = await Order.query().where('type', 'helper').fetch();
+  const items = await Marker.query().where('type', 'helper').fetch();
   response.send(items.toJSON())
 });
 
 Route.get('/api/v1/requests', async ({response}) => {
-  const items = await Order.query().where('type', 'helped').fetch();
+  const items = await Marker.query().where('type', 'helped').fetch();
   response.send(items.toJSON())
 });
 
-Route.get('/api/v1/orders', async ({response}) => {
-  const items = await Order.query().fetch();
+Route.get('/api/v1/matchs', async ({response}) => {
+  const items = await Match.query().fetch();
   response.send(items.toJSON())
 });
 

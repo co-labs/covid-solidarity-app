@@ -30,17 +30,10 @@ export default function Header(){
     <Toolbar className={classes.toolbar}>
       <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
         <Link variant="button" color="textPrimary" href="/" className={classes.link}>Solidarity App</Link>
-        <GeolocInput></GeolocInput>
       </Typography>
       <nav>
         <Link variant="button" color="textPrimary" href="/" className={classes.link}>
           Map
-        </Link>
-        <Link variant="button" color="textPrimary" href="/proposals" className={classes.link}>
-          Proposals
-        </Link>
-        <Link variant="button" color="textPrimary" href="/requests" className={classes.link}>
-          Requests
         </Link>
       </nav>
       <Button href="/login" color="primary" variant="outlined" className={classes.link}>
