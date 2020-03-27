@@ -39,17 +39,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const userFormInput = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-}
-
-const onChange = event => {
-  userFormInput[event.target.name] = event.target.value;
-}
-
 const handleSubmit = event => {
   event.preventDefault(event)
   axios({
@@ -74,15 +63,13 @@ export default function EditProfileForm() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
+                name="first_name"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
+                id="first_name"
                 label="First Name"
                 autoFocus
-                onChange={onChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -90,11 +77,9 @@ export default function EditProfileForm() {
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
+                id="last_name"
                 label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-                onChange={onChange}
+                name="last_name"
               />
             </Grid>
             <Grid item xs={12}>
@@ -106,7 +91,6 @@ export default function EditProfileForm() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                onChange={onChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -118,8 +102,7 @@ export default function EditProfileForm() {
                 label="Phone"
                 type="text"
                 id="password"
-                autoComplete="current-password"
-                onChange={onChange}
+                autoComplete="password"
               />
             </Grid>
             <Grid item xs={12}>

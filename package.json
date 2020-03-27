@@ -2,8 +2,8 @@
   "name": "solidarity-app",
   "version": "1.0.0",
   "scripts": {
-    "api": "cd api && npm run start",
-    "api-dev": "cd api && npm run start --dev",
+    "api": "cd api && adonis serve",
+    "api-dev": "cd api && adonis serve --dev",
     "api-install": "cd api && npm install",
     "www": "cd www && npm run start",
     "www-dev": "cd www && npm run dev",

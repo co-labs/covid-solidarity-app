@@ -2,9 +2,14 @@
 
 const User = use('App/Models/User');
 const Mail = use('Mail');
-const {validate} = use('Validator');
 
 class UserController {
+
+    async index({auth, response}) {
+        const user = await auth.authenticator('jwt').getUser();
+        response.send(user);
+    }
+
     /**
      * User registration process
      *
@@ -14,17 +19,6 @@ class UserController {
      * @returns {Promise<void>}
      */
     async store({auth, response, request}) {
-
-        const rules = {
-            email: 'required|email|unique:users,email',
-            password: 'required'
-        }
-
-        const validation = await validate(request.all(), rules)
-
-        if (validation.fails()) {
-            return response.send(validation.messages(), 402);
-        }
 
         let user = await new User;
         user.first_name = request.input('firstName');
@@ -48,16 +42,41 @@ class UserController {
                     .from('info@allforclimate.earth')
                     .subject('Welcome to Covid Solidarity !')
             });
-
-            await auth.remember(true).login(user.id);
         }
+
+        await auth.remember(true).login(user.id);
 
         response.send(user);
     }
 
     async login({auth, response, request}) {
 
+        await auth.logout();
+
         let user = await auth.attempt(request.input('email'), request.input('password'));
+
+        if (user) {
+            user.token = await auth
+                .authenticator('jwt')
+                .withRefreshToken()
+                .generate(user);
+        }
+
+        response.send(user);
+    }
+
+    async logout({auth}) {
+        await auth.logout();
+    }
+
+    async token({auth, response, request}) {
+
+        let user = await auth.user;
+
+        user.token  = await auth
+            .authenticator('jwt')
+            .withRefreshToken()
+            .generate(user);
 
         response.send(user);
     }

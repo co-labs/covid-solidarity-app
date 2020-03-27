@@ -40,8 +40,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const handleSuccess = (res) => {
-  console.log('Res 2', res);
-  cookie.set('token', 1, { expires: 1 });
+  localStorage.setItem('token', res.data.token);
+  cookie.set('token', res.data.token.token, { expires: 1 });
   Router.push('/dashboard');
 };
 

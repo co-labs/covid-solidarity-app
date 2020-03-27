@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
-import Router from 'next/router'
-import nextCookie from 'next-cookies'
-import cookie from 'js-cookie'
+import { useEffect } from 'react';
+import Router from 'next/router';
+import nextCookie from 'next-cookies';
+import cookie from 'js-cookie';
+import api from './api';
 
-export const login = ({ token }) => {
-  cookie.set('token', token, { expires: 1 });
+export const login = (res) => {
+  cookie.set('token', res.data.token, { expires: 1 });
   Router.push('/dashboard');
 };
 
@@ -24,6 +25,11 @@ export const auth = ctx => {
   return token
 };
 
+export const getUser = async (ctx) => {
+  const user = await api.get('me');
+  return user;
+};
+
 export const logout = () => {
   cookie.remove('token');
   // to support logging out from all windows
@@ -41,6 +47,7 @@ export const WithAuthSync = WrappedComponent => {
     };
 
     useEffect(() => {
+
       window.addEventListener('storage', syncLogout);
 
       return () => {
@@ -53,13 +60,13 @@ export const WithAuthSync = WrappedComponent => {
   };
 
   Wrapper.getInitialProps = async ctx => {
-    const token = auth(ctx);
+    const token = await auth(ctx);
 
     const componentProps =
       WrappedComponent.getInitialProps &&
       (await WrappedComponent.getInitialProps(ctx));
 
-    return { ...componentProps, token }
+    return { ...componentProps, token};
   };
 
   return Wrapper
