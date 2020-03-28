@@ -29,7 +29,6 @@ export default function Header(){
   useEffect(() => {
     getUser().then(res => setUser(res.data));
   }, []);
-  console.log(user)
   
   const classes = useStyles();
 
