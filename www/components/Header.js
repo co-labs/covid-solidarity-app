@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import GeolocInput from "./GeolocInput";
-import { getUser } from '../utils/auth';
+import { getUser, logout } from '../utils/auth';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -48,6 +48,9 @@ export default function Header(){
           </Link>
         }
       </nav>
+      <Button onClick={() => logout()} color="primary" variant="outlined" className={classes.link}>
+        Logout
+      </Button>
       <Button href="/login" color="primary" variant="outlined" className={classes.link}>
         Login
       </Button>
