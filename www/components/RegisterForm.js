@@ -17,6 +17,7 @@ import axios from 'axios';
 import getApiUrl from "../utils/helpers/getApiUrl";
 import Router from 'next/router';
 import Form from "./Form";
+import cookie from "js-cookie";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -38,28 +39,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const userFormInput = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-}
-
-const onChange = event => {
-  userFormInput[event.target.name] = event.target.value;
-}
-
-const handleSubmit = event => {
-  event.preventDefault(event)
-  axios({
-    method: 'POST',
-    url: getApiUrl('register'),
-    data: {...userFormInput}
-  })
-  .then(response => {
-    Router.push('dashboard');
-  })
-  .catch(error => console.log(error.response))
+const handleSuccess = (res) => {
+  localStorage.setItem('token', res.data.token);
+  cookie.set('token', res.data.token.token, { expires: 1 });
+  Router.push('/dashboard');
 };
 
 export default function SignUp() {
@@ -75,7 +58,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Form className={classes.form} action={getApiUrl('register')}>
+        <Form className={classes.form} action={getApiUrl('register')} onSuccess={handleSuccess}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -87,7 +70,6 @@ export default function SignUp() {
                 id="first_name"
                 label="First Name"
                 autoFocus
-                onChange={onChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -99,7 +81,6 @@ export default function SignUp() {
                 label="Last Name"
                 name="last_name"
                 autoComplete="last_name"
-                onChange={onChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -111,7 +92,6 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                onChange={onChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -124,7 +104,6 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={onChange}
               />
             </Grid>
           </Grid>

@@ -19,14 +19,13 @@ class UserController {
      * @returns {Promise<void>}
      */
     async store({auth, response, request}) {
-
+        
         let user = await new User;
-        user.first_name = request.input('firstName');
-        user.last_name = request.input('lastName');
-        user.username = user.first_name + user.last_name;
+        user.first_name = request.input('first_name');
+        user.last_name = request.input('last_name');
+        user.username = `${user.first_name}${user.last_name}`;
         user.email = request.input('email');
         user.password = request.input('password');
-
         await user.save();
 
         if (user) {
@@ -43,8 +42,15 @@ class UserController {
                     .subject('Welcome to Covid Solidarity !')
             });
         }
+        
+        await auth.logout();
 
-        await auth.remember(true).login(user.id);
+        await auth.attempt(user.email, request.input('password'));
+
+        user.token = await auth
+            .authenticator('jwt')
+            .withRefreshToken()
+            .generate(user);
 
         response.send(user);
     }
