@@ -48,15 +48,20 @@ export default function Header(){
           </Link>
         }
       </nav>
-      <Button onClick={() => logout()} color="primary" variant="outlined" className={classes.link}>
-        Logout
-      </Button>
-      <Button href="/login" color="primary" variant="outlined" className={classes.link}>
-        Login
-      </Button>
-      <Button href="/register" color="primary" variant="outlined" className={classes.link}>
-        Register
-      </Button>
+      {user.first_name ? 
+        <Button onClick={() => logout()} color="primary" variant="outlined" className={classes.link}>
+          Logout
+        </Button>
+        :
+        <>
+          <Button href="/login" color="primary" variant="outlined" className={classes.link}>
+            Login
+          </Button>
+          <Button href="/register" color="primary" variant="outlined" className={classes.link}>
+            Register
+          </Button>
+        </>
+      }
     </Toolbar>
   </AppBar>
 }
