@@ -9,6 +9,7 @@ import {WithAuthSync} from '../utils/auth';
 import api from '../utils/api';
 import HelperForm from "../components/HelperForm";
 import HelpedForm from "../components/HelpedForm";
+import { Link } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,6 +22,10 @@ const useStyles = makeStyles(theme => ({
   control: {
     padding: theme.spacing(2),
   },
+  link: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
 }));
 
 const Dashboard = props => {
@@ -30,6 +35,8 @@ const Dashboard = props => {
   const [user, setUser] = React.useState({
     first_name: null
   });
+
+  const [profileEditionEnabled , setProfileEditionEnabled] = React.useState(false);
 
   const [getListings, setListings] = React.useState([]);
 
@@ -41,34 +48,47 @@ const Dashboard = props => {
     <Header></Header>
     <Container component="main" maxWidth="md">
       <h2>Bonjour, {user.first_name}</h2>
-      <EditProfileForm></EditProfileForm>
-      <h2>Que souhaitez-vous faire ?</h2>
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12}>
-          <Grid container justify="center" spacing={2}>
-            <Grid item>
-              <Paper className={classes.paper}>
-                <h4>J'ai besoin d'aide</h4>
-                <button>C'est parti</button>
-              </Paper>
-            </Grid>
-            <Grid item>
-              <Paper className={classes.paper}>
-                <h4>Je veux fournir de l’aide</h4>
-                <button>C'est parti</button>
-              </Paper>
-            </Grid>
-            <Grid item>
-              <Paper className={classes.paper}>
-                <h4>Je demande de l’aide pour quelqu’un d’autre</h4>
-                <button>C'est parti</button>
-              </Paper>
+      { profileEditionEnabled ? 
+        <>  
+          <Link variant="button" color="textPrimary" onClick={() => setProfileEditionEnabled(false)} className={classes.link}>
+            revenir en arrière
+          </Link> 
+          <EditProfileForm></EditProfileForm>
+        </>
+        :
+        <>
+          <Link variant="button" color="textPrimary" onClick={() => setProfileEditionEnabled(true)} className={classes.link}>
+            éditer mon profil
+          </Link>
+          <h2>Que souhaitez-vous faire ?</h2>
+          <Grid container className={classes.root} spacing={2}>
+            <Grid item xs={12}>
+              <Grid container justify="center" spacing={2}>
+                <Grid item>
+                  <Paper className={classes.paper}>
+                    <h4>J'ai besoin d'aide</h4>
+                    <button>C'est parti</button>
+                  </Paper>
+                </Grid>
+                <Grid item>
+                  <Paper className={classes.paper}>
+                    <h4>Je veux fournir de l’aide</h4>
+                    <button>C'est parti</button>
+                  </Paper>
+                </Grid>
+                <Grid item>
+                  <Paper className={classes.paper}>
+                    <h4>Je demande de l’aide pour quelqu’un d’autre</h4>
+                    <button>C'est parti</button>
+                  </Paper>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Grid>
-      <HelpedForm></HelpedForm>
-      <HelperForm></HelperForm>
+          <HelpedForm></HelpedForm>
+          <HelperForm></HelperForm>
+        </>
+      }
     </Container>
   </React.Fragment>;
 };
