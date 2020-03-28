@@ -53,7 +53,7 @@ const Dashboard = props => {
           <Link variant="button" color="textPrimary" onClick={() => setProfileEditionEnabled(false)} className={classes.link}>
             revenir en arrière
           </Link> 
-          <EditProfileForm></EditProfileForm>
+          <EditProfileForm user={user}></EditProfileForm>
         </>
         :
         <>

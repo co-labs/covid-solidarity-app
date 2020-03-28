@@ -52,7 +52,8 @@ const handleSubmit = event => {
   .catch(error => console.log(error.response))
 };
 
-export default function EditProfileForm() {
+export default function EditProfileForm({ user }) {
+
   const classes = useStyles();
 
   return (
@@ -67,6 +68,7 @@ export default function EditProfileForm() {
                 variant="outlined"
                 required
                 fullWidth
+                value={user.first_name}
                 id="first_name"
                 label="First Name"
                 autoFocus
@@ -77,6 +79,7 @@ export default function EditProfileForm() {
                 variant="outlined"
                 required
                 fullWidth
+                value={user.last_name}
                 id="last_name"
                 label="Last Name"
                 name="last_name"
@@ -87,6 +90,7 @@ export default function EditProfileForm() {
                 variant="outlined"
                 required
                 fullWidth
+                value={user.email}
                 id="email"
                 label="Email Address"
                 name="email"
@@ -101,8 +105,8 @@ export default function EditProfileForm() {
                 name="phone"
                 label="Phone"
                 type="text"
-                id="password"
-                autoComplete="password"
+                id="phone"
+                autoComplete="phone"
               />
             </Grid>
             <Grid item xs={12}>
