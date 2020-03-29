@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme => ({
   link: {
     display: 'flex',
     justifyContent: 'flex-end',
+    cursor: 'pointer',
   },
 }));
 
@@ -50,14 +51,26 @@ const Dashboard = props => {
       <h2>Bonjour, {user.first_name}</h2>
       { profileEditionEnabled ? 
         <>  
-          <Link variant="button" color="textPrimary" onClick={() => setProfileEditionEnabled(false)} className={classes.link}>
+          <Link 
+            variant="body1" 
+            color="primary" 
+            underline="always" 
+            onClick={() => setProfileEditionEnabled(false)} 
+            className={classes.link}
+          >
             revenir en arrière
           </Link> 
           <EditProfileForm user={user}></EditProfileForm>
         </>
         :
         <>
-          <Link variant="button" color="textPrimary" onClick={() => setProfileEditionEnabled(true)} className={classes.link}>
+          <Link 
+            variant="body1" 
+            color="primary" 
+            underline="always"
+            onClick={() => setProfileEditionEnabled(true)} 
+            className={classes.link}
+          >
             éditer mon profil
           </Link>
           <h2>Que souhaitez-vous faire ?</h2>
