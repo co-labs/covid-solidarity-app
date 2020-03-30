@@ -23,45 +23,44 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Header(){
-
-  const [user, setUser] = React.useState({});
-  useEffect(() => {
-    getUser().then(res => setUser(res.data));
-  }, []);
+const Header = ({ first_name }) => {
   
   const classes = useStyles();
 
-
-  return <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
-    <Toolbar className={classes.toolbar}>
-      <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-        <Link variant="button" color="textPrimary" href="/" className={classes.link}>Solidarity App</Link>
-      </Typography>
-      <nav>
-        <Link variant="button" color="textPrimary" href="/" className={classes.link}>
-          Map
-        </Link>
-        {user.first_name && 
-          <Link variant="button" color="textPrimary" href="/dashboard" className={classes.link}>
-            Bonjour {user.first_name}
+  return ( 
+    
+    <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
+      <Toolbar className={classes.toolbar}>
+        <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+          <Link variant="button" color="textPrimary" href="/" className={classes.link}>Solidarity App</Link>
+        </Typography>
+        <nav>
+          <Link variant="button" color="textPrimary" href="/" className={classes.link}>
+            Map
           </Link>
+          {first_name && 
+            <Link variant="button" color="textPrimary" href="/dashboard" className={classes.link}>
+              Bonjour {first_name}
+            </Link>
+          }
+        </nav>
+        {first_name ? 
+          <Button onClick={() => logout()} color="primary" variant="outlined" className={classes.link}>
+            Logout
+          </Button>
+          :
+          <>
+            <Button href="/login" color="primary" variant="outlined" className={classes.link}>
+              Login
+            </Button>
+            <Button href="/register" color="primary" variant="outlined" className={classes.link}>
+              Register
+            </Button>
+          </>
         }
-      </nav>
-      {user.first_name ? 
-        <Button onClick={() => logout()} color="primary" variant="outlined" className={classes.link}>
-          Logout
-        </Button>
-        :
-        <>
-          <Button href="/login" color="primary" variant="outlined" className={classes.link}>
-            Login
-          </Button>
-          <Button href="/register" color="primary" variant="outlined" className={classes.link}>
-            Register
-          </Button>
-        </>
-      }
     </Toolbar>
   </AppBar>
-}
+  )
+};
+
+export default Header;

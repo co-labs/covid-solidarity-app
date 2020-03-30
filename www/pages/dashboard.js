@@ -9,6 +9,7 @@ import {WithAuthSync} from '../utils/auth';
 import api from '../utils/api';
 import HelperForm from "../components/HelperForm";
 import HelpedForm from "../components/HelpedForm";
+import { getUser } from '../utils/auth'
 import { Link } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -42,11 +43,11 @@ const Dashboard = props => {
   const [getListings, setListings] = React.useState([]);
 
   useEffect(() => {
-    api.get('me').then((res) => setUser(res.data));
+    getUser().then((res) => setUser(res.data));
   }, []);
 
   return <React.Fragment>
-    <Header></Header>
+    <Header {...user} ></Header>
     <Container component="main" maxWidth="md">
       <h2>Bonjour, {user.first_name}</h2>
       { profileEditionEnabled ? 
